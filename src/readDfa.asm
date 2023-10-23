@@ -5,6 +5,7 @@ section .data
   states: db 0
   transitions: db 0
   fd: dd 0
+  dfaPointer dq 0 
 
 section .bss
   info resb 1
@@ -14,6 +15,7 @@ extern initDfa
 
 readDfa:
   ; Open the file for reading.
+  .dfa equ 8
   
   mov eax, 5 ; sys_open system call
   mov rbx, rdi ; file name
@@ -79,6 +81,10 @@ move_transition:
   movzx rdi, byte [states]  
   movzx rsi, byte [transitions]   
   call initDfa
+  ; rax holds pointer to dfa struct
+  ; assign it
+  mov [dfaPointer], rax
+
   jmp read_loop  
 
 end_of_file:
