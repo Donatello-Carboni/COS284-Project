@@ -83,7 +83,7 @@ move_transition:
   call initDfa
   ; rax holds pointer to dfa struct
   ; assign it
-  mov [dfaPointer], rax
+  mov dfaPointer, rax
 
   jmp read_loop  
 
