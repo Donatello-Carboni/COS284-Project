@@ -1,6 +1,6 @@
 # COS284 Project: Deterministic Finite Automata
 
-[![Run Make](https://github.com/Donatello-Carboni/COS284-Project/actions/workflows/makeBinary.yml/badge.svg)](https://github.com/Donatello-Carboni/COS284-Project/actions/workflows/makeBinary.yml)
+<!-- [![Run Make](https://github.com/Donatello-Carboni/COS284-Project/actions/workflows/makeBinary.yml/badge.svg)](https://github.com/Donatello-Carboni/COS284-Project/actions/workflows/makeBinary.yml) -->
 [![Clang Format Checker (Linting)](https://github.com/Donatello-Carboni/COS284-Project/actions/workflows/superLinter.yml/badge.svg)](https://github.com/Donatello-Carboni/COS284-Project/actions/workflows/superLinter.yml)
 
 This project is an assignment for the COS284 course at the University of Pretoria. The aim of the project is to design a program for constructing, simulating, and comparing deterministic finite automata (DFA) in assembly language.
