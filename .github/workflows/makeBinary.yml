@@ -1,0 +1,19 @@
+name: Run Make
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Change into src directory
+      run: cd src
+      
+    - name: Run Make
+      run: make
