@@ -1,3 +1,4 @@
+[![Clang Format Checker (Linting)](https://github.com/Donatello-Carboni/COS284-Project/actions/workflows/superLinter.yml/badge.svg)](https://github.com/Donatello-Carboni/COS284-Project/actions/workflows/superLinter.yml)
 # COS284 Project: Deterministic Finite Automata
 This project is an assignment for the COS284 course at the University of Pretoria. The aim of the project is to design a program for constructing, simulating, and comparing deterministic finite automata (DFA) in assembly language.
 
