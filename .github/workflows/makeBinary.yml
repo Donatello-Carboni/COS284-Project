@@ -12,8 +12,5 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       
-    - name: Change into src directory
-      run: cd src
-      
     - name: Run Make
       run: make
