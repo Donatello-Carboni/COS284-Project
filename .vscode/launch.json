@@ -5,32 +5,12 @@
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${fileDirname}",
+      "program": "/home/donatellogc/Documents/University/COS284/Practicals/COS284-Project/bin/main",
       "args": [],
-      "stopAtEntry": false,
-      "cwd": "${fileDirname}/src",
+      "stopAtEntry": true,
+      "cwd": "/home/donatellogc/Documents/University/COS284/Practicals/COS284-Project",
       "environment": [],
       "MIMode": "gdb",
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        }
-      ],
-      "preLaunchTask": "build"
-    },
-    {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "cppdbg",
-      "request": "launch",
-      "args": [],
-      "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "${fileDirname}/src",
-      "program": "${fileDirname}/bin/main",
-      "MIMode": "gdb",
-      "miDebuggerPath": "/usr/bin/gdb",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
