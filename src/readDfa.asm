@@ -14,7 +14,6 @@ extern initDfa
 
 readDfa:
   ; Open the file for reading.
-  .dfa equ 8
   
   mov eax, 5 ; sys_open system call
   mov rbx, rdi ; file name
@@ -88,6 +87,7 @@ move_transition:
   ; assign it
   mov rdi, rax
   mov dword [rdi + DFA.startState], 0
+  ;ret
   xor r8, r8
   jmp read_loop  
 
@@ -101,6 +101,8 @@ end_of_file:
   ret
 
 second_init:
+  mov rax, rdi
+  ;ret
   mov r11, [rdi + DFA.states]
 
   ; Load the number of states into rcx (assuming numStates is a member of the DFA structure)
@@ -133,6 +135,8 @@ second_loop:
   mov [r11 + State.id], r8
   mov byte [rdi + State.isAccepting], 0
   ; Move to the next state by adding the size of State struct to rbx
+  ;mov rax, rdi
+  ;ret
   add r11, 8  ; Size of State struct (assuming id is 4 bytes, isAccepting is 1 byte)
   ; Increment the loop counter
   inc r9
@@ -153,7 +157,6 @@ second_loop:
 
 third_init:
   mov r11, [rdi + DFA.states]
-
   ; Load the number of states into rcx (assuming numStates is a member of the DFA structure)
   mov al, [rdi + DFA.numStates]
   movzx rsi, al
@@ -211,7 +214,6 @@ set_accepting:
 
 fourth_init:
   mov r11, [rdi + DFA.transitions]
-
   ; Load the number of transitions into rcx (assuming numTransitions is a member of the DFA structure)
   mov al, [rdi + DFA.numTransitions]
   movzx rsi, al
@@ -239,7 +241,6 @@ fourth_loop:
   je end_of_file
   ; Access the current transition using rbx as the base pointer
   ; Load .from, .to, and .symbol fields into rdi, rsi, and rdx respectively
-  sub r8, '0'
 
   cmp r10, 0
   je set_from
@@ -250,18 +251,19 @@ fourth_loop:
   cmp r10, 2
   je set_symbol
 
-  cmp r10, 2
-  jg error
+  jmp error
 
   jmp end_of_file
 ; End of the loop
 
 set_from:
+  sub r8, '0'
   mov [r11 + Transition.from], r8
   inc r10
   jmp fourth_loop
 
 set_to:
+  sub r8, '0'
   mov [r11 + Transition.to], r8
   inc r10
   jmp fourth_loop
@@ -273,9 +275,8 @@ set_symbol:
 
 reset_line_counter:
   xor r10, r10
-
   ; Move to the next transition by adding the size of Transition struct to rbx
-  add r11, 12  ; Size of Transition struct (4 bytes for .from + 4 bytes for .to + 1 byte for .symbol)
+  add r11, 9  ; Size of Transition struct (4 bytes for .from + 4 bytes for .to + 1 byte for .symbol)
 
   ; Increment the loop counter
   inc r9
@@ -289,4 +290,3 @@ error:
   ; Some error
   leave
   ret
-
