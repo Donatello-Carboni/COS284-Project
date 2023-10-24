@@ -15,7 +15,7 @@ The project consists of three deliverables:
 
 ## Project Files
 
-The following files were provided:
+The following files were provided to us:
 
 - `initDfa.asm`: A helper function for initializing a DFA structure.
 - `dfa.h`: A header file with the definitions of the DFA structures and the interfaces for the functions you need to implement.
