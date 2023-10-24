@@ -1,24 +1,43 @@
 {
-  "version": "0.2.0",
+  "version": " 0.2.0 ",
   "configurations": [
     {
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${fileDirname}/../../bin/main",
+      "program": "/workspaces/COS284-Project/bin/main",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "${fileDirname}/../../bin",
+      "cwd": "/workspaces/COS284-Project/src",
       "environment": [],
       "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty - printing for gdb",
+          "text": "-enable -pretty - printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "build"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "/workspaces/COS284-Project/src",
+      "program": "/workspaces/COS284-Project/bin/main",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         }
-      ],
-      "preLaunchTask": "build" // runs "make" command before debugging
+      ]
     }
   ]
 }
