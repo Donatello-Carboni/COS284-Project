@@ -131,7 +131,7 @@ second_loop:
   ; Load .id and .isAccepting fields into rdi and rsi respectively
   sub r8, '0'
   mov [r11 + State.id], r8
-  mov byte [r11 + State.isAccepting], 0
+  mov byte [rdi + State.isAccepting], 0
   ; Move to the next state by adding the size of State struct to rbx
   add r11, 8  ; Size of State struct (assuming id is 4 bytes, isAccepting is 1 byte)
   ; Increment the loop counter
@@ -155,7 +155,8 @@ third_init:
   mov r11, [rdi + DFA.states]
 
   ; Load the number of states into rcx (assuming numStates is a member of the DFA structure)
-  mov rsi, [rdi + DFA.numStates]
+  mov al, [rdi + DFA.numStates]
+  movzx rsi, al
   xor r8, r8
   xor r9, r9
 
@@ -191,7 +192,8 @@ third_loop:
 
 init_Accepting:
   sub r8, '0'
-  cmp [r11 + State.id], r8
+  mov rax, [r11 + State.id]
+  cmp rax, r8
   je set_accepting
   
   add r11, 8  ; Size of State struct (assuming id is 4 bytes, isAccepting is 1 byte)
@@ -204,15 +206,15 @@ init_Accepting:
   jmp error 
 
 set_accepting:
-  mov byte [rdi + State.isAccepting], 1
+  mov byte [r11 + State.isAccepting], 1
   jmp third_init
 
 fourth_init:
   mov r11, [rdi + DFA.transitions]
 
   ; Load the number of transitions into rcx (assuming numTransitions is a member of the DFA structure)
-  mov rsi, [rdi + DFA.numTransitions]
-
+  mov al, [rdi + DFA.numTransitions]
+  movzx rsi, al
   ; Initialize loop counter
   xor r9, r9  ; rdx will be used as the loop counter for all lines
   xor r10, r10 ; line counter
@@ -227,7 +229,7 @@ fourth_loop:
 
   mov r8, [info]
   cmp r8, ','  ; Compare the least significant byte (AL) of eax with ASCII value of comma (',')
-  je third_loop  ; Jump if equal to comma
+  je fourth_loop  ; Jump if equal to comma
 
   ; Check if the value in eax is equal to newline ('\n')
   cmp r8, 10  ; Compare AL with ASCII value of newline ('\n')
@@ -255,17 +257,17 @@ fourth_loop:
 ; End of the loop
 
 set_from:
-  mov [rdi + Transition.from], r8
+  mov [r11 + Transition.from], r8
   inc r10
   jmp fourth_loop
 
 set_to:
-  mov [rdi + Transition.to], r8
+  mov [r11 + Transition.to], r8
   inc r10
   jmp fourth_loop
 
 set_symbol:
-  mov [rdi + Transition.symbol], r8
+  mov [r11 + Transition.symbol], r8
   inc r10
   jmp fourth_loop
 
@@ -273,7 +275,7 @@ reset_line_counter:
   xor r10, r10
 
   ; Move to the next transition by adding the size of Transition struct to rbx
-  add rdi, 12  ; Size of Transition struct (4 bytes for .from + 4 bytes for .to + 1 byte for .symbol)
+  add r11, 12  ; Size of Transition struct (4 bytes for .from + 4 bytes for .to + 1 byte for .symbol)
 
   ; Increment the loop counter
   inc r9
