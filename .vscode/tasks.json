@@ -4,7 +4,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "cd ${fileDirname} && make",
+            "command": "cd /home/donatellogc/Documents/University/COS284/Practicals/COS284-Project/src && make ",
             "group": "build"
         },
         {

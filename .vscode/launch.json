@@ -5,10 +5,10 @@
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${fileDirname}/../../bin/main",
+      "program": "${fileDirname}",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "${fileDirname}/../../bin",
+      "cwd": "${fileDirname}/src",
       "environment": [],
       "MIMode": "gdb",
       "setupCommands": [
@@ -18,7 +18,27 @@
           "ignoreFailures": true
         }
       ],
-      "preLaunchTask": "build" // runs "make" command before debugging
+      "preLaunchTask": "build"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "${fileDirname}/src",
+      "program": "${fileDirname}/bin/main",
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "build"
     }
   ]
 }
