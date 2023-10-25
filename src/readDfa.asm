@@ -150,9 +150,10 @@ second_loop:
   ;mov ecx, info ; buffer containing the read data
   ;mov edx, 1 ;eax ; number of bytes to print
   ;int 0x80 ; call kernel
-
+  cmp r9, rsi
+  je second_loop
   ; Too many values
-  ;jmp error
+  jmp error
 
 third_init:
   mov r11, [rdi + DFA.states]
@@ -221,12 +222,22 @@ fourth_init:
   xor r10, r10 ; line counter
 
 fourth_loop:
-  xor r8, r8
   mov eax, 3 ; sys_read system call
   mov ebx, eax ; file descriptor is in the rax register
   mov ecx, info ; buffer to store the read data
   mov edx, 1 ; number of bytes to read
   int 0x80 ; call kernel
+
+  ;mov eax, 4 ; sys_write system call
+  ;mov ebx, 1 ; standard output file descriptor
+  ;mov ecx, info ; buffer containing the read data
+  ;mov edx, 1 ;eax ; number of bytes to print
+  ;int 0x80 ; call kernel
+
+  ;cmp eax, 0
+  ;je end_of_file
+
+  ;jmp fourth_loop
 
   mov r8, [info]
   cmp r8, ','  ; Compare the least significant byte (AL) of eax with ASCII value of comma (',')
@@ -236,8 +247,7 @@ fourth_loop:
   cmp r8, 10  ; Compare AL with ASCII value of newline ('\n')
   je reset_line_counter  ; Jump if equal to newline
   ; Check if the end of file was reached.
-  cmp eax, 0
-  je end_of_file
+  
   ; Access the current transition using rbx as the base pointer
   ; Load .from, .to, and .symbol fields into rdi, rsi, and rdx respectively
 
