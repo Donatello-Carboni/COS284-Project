@@ -182,6 +182,7 @@ third_loop:
   cmp eax, 0
   je end_of_file
 
+  sub r8, '0'
   jmp init_Accepting
   ; Print the info.
   ;mov eax, 4 ; sys_write system call
@@ -194,7 +195,7 @@ third_loop:
   jmp error
 
 init_Accepting:
-  sub r8, '0'
+ 
   mov al, [r11 + State.id]
   cmp rax, r8
   je set_accepting
@@ -234,8 +235,8 @@ fourth_loop:
   ;mov edx, 1 ;eax ; number of bytes to print
   ;int 0x80 ; call kernel
 
-  ;cmp eax, 0
-  ;je end_of_file
+  cmp eax, 0
+  je end_of_file
 
   ;jmp fourth_loop
 
