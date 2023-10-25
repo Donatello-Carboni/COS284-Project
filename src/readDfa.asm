@@ -7,7 +7,7 @@ section .data
   fd: dd 0
 
 section .bss
-  info resb 1
+  info resb 2
   
 section .text
 extern initDfa 
@@ -101,12 +101,11 @@ end_of_file:
   ret
 
 second_init:
-  mov rax, rdi
-  ;ret
   mov r11, [rdi + DFA.states]
 
   ; Load the number of states into rcx (assuming numStates is a member of the DFA structure)
-  mov rsi, [rdi + DFA.numStates]
+  mov al, [rdi + DFA.numStates]
+  movzx rsi, al
   xor r8, r8
   xor r9, r9
 
@@ -133,11 +132,11 @@ second_loop:
   ; Load .id and .isAccepting fields into rdi and rsi respectively
   sub r8, '0'
   mov [r11 + State.id], r8
-  mov byte [rdi + State.isAccepting], 0
+  mov byte [r11 + State.isAccepting], 0
   ; Move to the next state by adding the size of State struct to rbx
   ;mov rax, rdi
   ;ret
-  add r11, 8  ; Size of State struct (assuming id is 4 bytes, isAccepting is 1 byte)
+  add r11, State_size  ; Size of State struct (assuming id is 4 bytes, isAccepting is 1 byte)
   ; Increment the loop counter
   inc r9
   ; Compare the loop counter with the number of states
@@ -153,7 +152,7 @@ second_loop:
   ;int 0x80 ; call kernel
 
   ; Too many values
-  jmp error
+  ;jmp error
 
 third_init:
   mov r11, [rdi + DFA.states]
@@ -195,11 +194,11 @@ third_loop:
 
 init_Accepting:
   sub r8, '0'
-  mov rax, [r11 + State.id]
+  mov al, [r11 + State.id]
   cmp rax, r8
   je set_accepting
   
-  add r11, 8  ; Size of State struct (assuming id is 4 bytes, isAccepting is 1 byte)
+  add r11, State_size  ; Size of State struct (assuming id is 4 bytes, isAccepting is 1 byte)
   ; Increment the loop counter
   inc r9
   ; Compare the loop counter with the number of states
@@ -276,7 +275,8 @@ set_symbol:
 reset_line_counter:
   xor r10, r10
   ; Move to the next transition by adding the size of Transition struct to rbx
-  add r11, 9  ; Size of Transition struct (4 bytes for .from + 4 bytes for .to + 1 byte for .symbol)
+  mov al, Transition_size
+  add r11, Transition_size  ; Size of Transition struct (4 bytes for .from + 4 bytes for .to + 1 byte for .symbol)
 
   ; Increment the loop counter
   inc r9
