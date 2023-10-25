@@ -278,7 +278,8 @@ set_to:
   jmp fourth_loop
 
 set_symbol:
-  mov [r11 + Transition.symbol], r8
+  mov al, [info]
+  mov [r11 + Transition.symbol], al
   inc r10
   jmp fourth_loop
 
